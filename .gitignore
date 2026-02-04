@@ -1,0 +1,18 @@
+# C言語のバイナリ・中間ファイル
+*.o
+*.obj
+*.exe
+*.out
+*.dSYM/
+
+# コンパイル済みバイナリが格納されるディレクトリ
+**/output/
+
+# OS生成ファイル
+.DS_Store
+Thumbs.db
+
+# IDE/エディタ設定
+.vscode/
+.idea/
+*.swp
