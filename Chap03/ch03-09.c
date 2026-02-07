@@ -8,13 +8,12 @@
 //   return 0;
 // }
 
-
 // 第３問
 
 // #include <stdio.h>
 // #include <limits.h>
 
-// int main(void) 
+// int main(void)
 // {
 //   int imax;
 //   unsigned int uimax;
@@ -47,8 +46,7 @@
 
 #include <stdio.h>
 
-int main(void)
-{
+int main(void) {
   printf("%lli, %llu\n", 32LL, 48ULL);
   return 0;
 }

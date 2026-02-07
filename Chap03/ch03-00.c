@@ -1,5 +1,5 @@
 // #include <stdio.h>
-// 
+//
 // int main(void)
 // {
 //   puts("C is nice!");
@@ -8,8 +8,7 @@
 
 #include <stdio.h>
 
-int main(void)
-{
+int main(void) {
   puts("hello!");
   return 0;
 }

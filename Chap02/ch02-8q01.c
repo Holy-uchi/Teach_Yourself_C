@@ -20,13 +20,6 @@
 //  }
 
 // 第三問
-int sum(int x, int y)
-{
-  return x + y;
-}
+int sum(int x, int y) { return x + y; }
 
-
-int main(int arvc, char *argv[])
-{
-  return sum(atoi(argv[1]), atoi(argv[2]));
-}
+int main(int arvc, char *argv[]) { return sum(atoi(argv[1]), atoi(argv[2])); }

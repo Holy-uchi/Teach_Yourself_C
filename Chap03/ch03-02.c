@@ -15,8 +15,7 @@
 //    return 0;
 //  }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   int quotient = atoi(argv[1]) / atoi(argv[2]);
   int remainder = atoi(argv[1]) % atoi(argv[2]);
   printf("%d...%d\n", quotient, remainder);

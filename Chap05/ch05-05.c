@@ -25,11 +25,10 @@
 // }
 
 // 第２問
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 
-int main(void)
-{
+int main(void) {
   bool found = false;
   for (int i = 0; i < 8; i++) {
     switch (i % 3) {
@@ -45,8 +44,9 @@ int main(void)
     default:
       puts("bug! never come here");
     }
-    
-    if (found) break;
+
+    if (found)
+      break;
   }
   puts("end");
 }

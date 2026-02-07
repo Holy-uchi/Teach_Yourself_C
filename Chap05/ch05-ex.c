@@ -13,7 +13,7 @@
 
 //     // 素数なら到達
 //     if (i >= RANGE_BEGIN) {
-//       printf("%i\n", i); 
+//       printf("%i\n", i);
 //     }
 
 //     // 自分以上の数を倍数に設定
@@ -53,19 +53,17 @@
 // }
 
 // 第２問 - 2
-#include <stdio.h>
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
 
-int main(void) 
-{
+int main(void) {
   int16_t max_16 = 1;
   bool found_max_16 = false;
   int32_t max_32 = 1;
   bool found_max_32 = false;
 
-
-  for (int i = 2 ;; i++) {
+  for (int i = 2;; i++) {
     if (!found_max_16 && max_16 <= INT16_MAX / i) {
       max_16 *= i;
       if (max_16 > INT16_MAX / i) {

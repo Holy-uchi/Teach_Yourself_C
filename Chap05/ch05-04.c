@@ -12,8 +12,7 @@
 // 第２問
 #include <stdio.h>
 
-int main(void)
-{
+int main(void) {
   for (int i = 1; i <= 50; i++) {
     if (i % 15 == 0) {
       puts("FizzBuzz");

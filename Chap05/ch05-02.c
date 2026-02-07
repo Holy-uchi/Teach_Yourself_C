@@ -1,6 +1,6 @@
 // 第１問
 // #include <stdio.h>
-// 
+//
 // int main(int argc, char *argv[])
 // {
 //   for (int i = 1; i < argc; i++) {
@@ -12,8 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   int last = atoi(argv[1]);
   int sum = 0;
   for (int i = 1; i <= last; i++) {

@@ -42,7 +42,6 @@
 //   }
 // }
 
-
 // 第３問
 // #include <stdio.h>
 // #include <stdlib.h>
@@ -80,8 +79,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   if (argc != 2) {
     puts("specify a number");
     return 1;

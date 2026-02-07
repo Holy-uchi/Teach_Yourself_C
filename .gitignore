@@ -1,19 +1,26 @@
-# C言語のバイナリ・中間ファイル
+# C language binaries and intermediate files
 *.o
 *.obj
 *.exe
 *.out
 *.dSYM/
 
-# コンパイル済みバイナリが格納されるディレクトリ
+# Build outputs
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+
+# Binary output directories
 **/output/
 **/bin/
 
-# OS生成ファイル
+# OS generated files
 .DS_Store
 Thumbs.db
 
-# IDE/エディタ設定
+# IDE/editor settings
 .vscode/
 .idea/
 *.swp

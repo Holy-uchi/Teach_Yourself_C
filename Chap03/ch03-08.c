@@ -1,8 +1,7 @@
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 
-int main(void)
-{
+int main(void) {
   // 第１問
   // int16_t x = -10;
   // int32_t y = x;
@@ -28,5 +27,4 @@ int main(void)
   x = z;
   printf("x: %d, y: %d\n", x, y);
   return 0;
-
 }

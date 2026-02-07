@@ -22,11 +22,10 @@
 // }
 
 // 第２問
-#include <stdio.h>
 #include <float.h>
+#include <stdio.h>
 
-int main(void)
-{
+int main(void) {
   long double ldbl_max = LDBL_MAX;
   printf("%Lf\n", ldbl_max);
   return 0;

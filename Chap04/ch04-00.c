@@ -17,7 +17,7 @@
 // int main(void)
 // {
 //   int imax = INT_MAX;
-//   int imin = INT_MIN; 
+//   int imin = INT_MIN;
 //   printf("int max: %i\n", imax);
 //   printf("int min: %i\n", imin);
 
@@ -51,11 +51,10 @@
 // }
 
 // 第５問
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 
-int main(void)
-{
+int main(void) {
   uint8_t ui8 = -1;
   uint16_t ui16 = ui8;
   uint32_t ui32 = ui16;

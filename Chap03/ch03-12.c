@@ -12,11 +12,10 @@
 // }
 
 // 第２問
-#include <stdio.h>
 #include <limits.h>
+#include <stdio.h>
 
-int main(void)
-{
+int main(void) {
   long long x = (unsigned int)INT_MIN;
   printf("%lli\n", x);
 }

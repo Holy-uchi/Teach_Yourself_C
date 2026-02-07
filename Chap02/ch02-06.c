@@ -1,4 +1,1 @@
-int main(int arvc, char *argv[])
-{
-  return 3;
-}
+int main(int arvc, char *argv[]) { return 3; }

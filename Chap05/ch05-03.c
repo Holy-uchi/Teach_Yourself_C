@@ -1,6 +1,6 @@
 // 第１問
 // #include <stdio.h>
-// 
+//
 // int main(void)
 // {
 //   int x = 1;
@@ -14,12 +14,11 @@
 // }
 
 // 第２問
-#include <stdio.h>
 #include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   int target = INT_MAX;
   for (int i = 1; i < argc; i++) {
     int divisor = atoi(argv[i]);
