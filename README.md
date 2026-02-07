@@ -1,12 +1,8 @@
-<p align="center">
-  <code>
-  ┌───────────────────────────┐<br/>
-  │      TEACH YOURSELF C     │<br/>
-  └───────────────────────────┘
-  </code>
-</p>
+# Teach Yourself C
 
-<p align="center"><b>Learning record repository</b></p>
+<p align="center">
+  <b>Learning record repository for "Teach Yourself C"</b>
+</p>
 
 <p align="center">
   <img alt="language" src="https://img.shields.io/badge/language-C-00599C.svg">
@@ -15,7 +11,6 @@
   <img alt="lsp" src="https://img.shields.io/badge/LSP-clangd-1F6FEB.svg">
   <img alt="progress" src="https://img.shields.io/badge/progress-6%2F14-2ea043.svg">
   <img alt="completion" src="https://img.shields.io/badge/completion-42.9%25-2ea043.svg">
-  <img alt="next" src="https://img.shields.io/badge/next-Chapter%207-0969da.svg">
 </p>
 
 ## Overview
