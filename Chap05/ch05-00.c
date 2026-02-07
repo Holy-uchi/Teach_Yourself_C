@@ -11,4 +11,9 @@
 // }
 
 // 第３問
-int main(int argc, char *argv[]) { return (argc > 1) ? 0 : 1; }
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  (void)argv;
+  return (argc > 1) ? 0 : 1;
+}

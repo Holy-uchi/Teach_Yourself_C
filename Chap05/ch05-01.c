@@ -1,5 +1,6 @@
 int main(void) {
   int x[] = {10, 20, 30, 40, 50};
+  (void)x;
   int y[5];
   y[0] = 10;
   y[1] = 20;

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
+  (void)argc;
   int x = atoi(argv[1]);
   int y = atoi(argv[2]);
   int sum, diff, prod, quot;

@@ -35,6 +35,7 @@
 #define MUL(x, y) atoi(x) * (y)
 
 int main(int argc, char *argv[]) {
+  (void)argc;
   printf("%i\n", MUL(argv[1], atoi(argv[2])));
   printf("%i\n", MUL(argv[1], 8 - 3));
 }

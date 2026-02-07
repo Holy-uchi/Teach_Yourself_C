@@ -5,6 +5,7 @@
 #define PRINT_MATH(operator) printf("%i\n", atoi(argv[1]) operator atoi(argv[2]))
 
 int main(int argc, char *argv[]) {
+  (void)argc;
   PRINT_MATH(+);
   PRINT_MATH(-);
   PRINT_MATH(*);
