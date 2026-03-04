@@ -1,9 +1,4 @@
-// lv_init
-// lv_destroy
-// lv_push
-// lv_insert
-// lv_delete
-// lv_reserve
+#pragma once
 #include <stddef.h>
 
 typedef struct {
@@ -12,9 +7,9 @@ typedef struct {
   size_t cap;
 } LineVec;
 
-int lv_init(LineVec *lv);
+void lv_init(LineVec *lv);
 
-int lv_destroy(LineVec *lv);
+void lv_destroy(LineVec *lv);
 
 int lv_reserve(LineVec *lv, size_t min_size);
 

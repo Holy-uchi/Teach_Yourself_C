@@ -6,21 +6,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-int lv_init(LineVec *lv) {
-  if (!lv) {
-    return EINVAL;
-  }
+void lv_init(LineVec *lv) {
   lv->p = NULL;
   lv->len = 0;
   lv->cap = 0;
-
-  return 0;
 }
 
-int lv_destroy(LineVec *lv) {
-  if (!lv) {
-    return EINVAL;
-  }
+void lv_destroy(LineVec *lv) {
 
   for (size_t i = 0; i < lv->len; i++) {
     free(lv->p[i]);
@@ -29,8 +21,6 @@ int lv_destroy(LineVec *lv) {
   lv->p = NULL;
   lv->len = 0;
   lv->cap = 0;
-
-  return 0;
 }
 
 int lv_reserve(LineVec *lv, size_t min_size) {

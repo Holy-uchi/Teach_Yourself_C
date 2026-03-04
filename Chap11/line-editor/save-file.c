@@ -52,6 +52,8 @@ cleanup:
   return rc;
 }
 
+// RETURNVAL: 0=>成功, -1=>失敗
+// 失敗理由はerrno
 int save_file(const char *path, LineVec *lv) {
   if (!path || !lv) {
     errno = EINVAL;

@@ -18,10 +18,7 @@ int load_file(const char *path, LineVec *lv) {
   LineVec lv_local = {0};
   FILE *fp = NULL;
   char *line = NULL;
-  rc = lv_init(&lv_local);
-  if (rc) {
-    goto cleanup;
-  }
+  lv_init(&lv_local);
 
   fp = fopen(path, "rb");
   if (!fp) {

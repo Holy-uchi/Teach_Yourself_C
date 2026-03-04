@@ -1,3 +1,4 @@
+#pragma once
 #include "line-vector.h"
 #include <stdio.h>
 
