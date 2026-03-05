@@ -82,6 +82,7 @@ int editor_run(Editor *ed, FILE *out) {
       }
       goto cleanup;
     }
+    // NOTE: lineは "" もあり得る。
     parse_command(line, &cmd);
     if (!cmd.valid) {
       fputs("不正なコマンドです\n", out);

@@ -1,7 +1,12 @@
 #include "command-parser.h"
+#include "line-vector.h"
+#include "my-utils.h"
+#include <_string.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/errno.h>
 
 void command_init(COMMAND *cmd) {
   cmd->valid = false;
@@ -30,41 +35,67 @@ int parse_command(const char *line, COMMAND *cmd) {
   COMMAND cmd_local = {0};
   command_init(&cmd_local);
   char *tmp_path = NULL;
+  LineVec tok_vec = {0};
+  lv_init(&tok_vec);
   // ====================
 
-  if (line[0] == 'a') {
+  rc = parse_line(line, &tok_vec);
+  if (rc != 0) {
+    goto cleanup;
+  }
+
+  if (tok_vec.len == 0) {
+    // 入力が""の時。
+    cmd->valid = false;
+  } else if (strcmp(tok_vec.p[0], "a") == 0) {
     cmd_local.valid = true;
     cmd_local.type = APPEND;
     *cmd = cmd_local;
-  } else if (line[0] == 'q') {
+  } else if (strcmp(tok_vec.p[0], "r") == 0) {
+    cmd_local.valid = true;
+    cmd_local.type = REPLACE;
+    *cmd = cmd_local;
+  } else if (strcmp(tok_vec.p[0], "l") == 0) {
+    cmd_local.valid = true;
+    cmd_local.type = LIST;
+    *cmd = cmd_local;
+  } else if (strcmp(tok_vec.p[0], "q") == 0) {
     cmd_local.valid = true;
     cmd_local.type = QUIT;
     *cmd = cmd_local;
-  } else if (line[0] == 'w') {
-    // sscanfかな？
-    // cmd->pathに空白の跡を埋める
-    tmp_path = malloc(64);
-    if (!tmp_path) {
-      rc = ENOMEM;
-      goto cleanup;
-    }
-
-    int n = sscanf(line, "w %63s ", tmp_path);
-    // ファイル名が63文字以上なら？ => ENOBUF
-    // tmp_pathが読み取れてないなら？ => EINVALかな？
-    // XXX: この辺からマジでこんがらがってくる
-    if (n < 2) {
+  } else if (strcmp(tok_vec.p[0], "w") == 0) {
+    if (tok_vec.len < 2) {
+      // 空白の後にパスが入力されてない場合は不正
+      // FIXME: ここのエラーメッセージどうする？
       rc = EINVAL;
       goto cleanup;
     }
-  } else if (line[0] == 's') {
+    cmd_local.valid = true;
+    cmd_local.type = WRITE;
+    cmd_local.path = strdup(tok_vec.p[1]);
+    *cmd = cmd_local;
+    command_init(&cmd_local); // cleanupで破壊しないように
+  } else if (strcmp(tok_vec.p[0], "s") == 0) {
     cmd_local.valid = true;
     cmd_local.type = SAVE;
     *cmd = cmd_local;
+  } else if (strcmp(tok_vec.p[0], "d") == 0) {
+    cmd_local.valid = true;
+    cmd_local.type = DELETE;
+    *cmd = cmd_local;
+  } else if (strcmp(tok_vec.p[0], "g") == 0) {
+    if (tok_vec.len < 2) {
+      // 空白の後にパスが入力されてない場合は不正
+      // FIXME: ここのエラーメッセージどうする？
+      rc = EINVAL;
+      goto cleanup;
+    }
+    // 数字列のパース処理
   }
 
 cleanup:
   command_destroy(&cmd_local);
+  lv_destroy(&tok_vec);
   free(tmp_path);
   return rc;
 }
