@@ -134,7 +134,7 @@ int cmd_list(Editor *ed, FILE *out) {
   // 不正パターン
   // 長さが0 => 不正というよりそれを伝えたいが、、、
   if (ed->buf.len == 0) {
-    fputs("== This file has no lines so far ==", out);
+    fputs("== This file has no lines so far ==\n", out);
     return 0;
   }
 
@@ -194,4 +194,13 @@ int cmd_delete(Editor *ed) {
   lv_delete(&ed->buf, ed->cur);
   return 0;
 }
-int cmd_goto(Editor *ed, int n1_based) { return ENOSYS; }
+int cmd_goto(Editor *ed, long n1_based) {
+  if (!ed) {
+    return EINVAL;
+  }
+
+  size_t target_1based = (size_t)n1_based > ed->buf.len ? ed->buf.len : (size_t)n1_based;
+  ed->cur = target_1based - 1;
+
+  return ENOSYS;
+}

@@ -3,6 +3,7 @@
 #include "my-utils.h"
 #include <_string.h>
 #include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,7 +20,7 @@ void command_destroy(COMMAND *cmd) {
   free(cmd->path);
   cmd->path = NULL;
   cmd->valid = false;
-  cmd->type = '\0'; // FIXME: enumにINVALIDみたいなcommand_typeを追加すればいいのでは？
+  cmd->type = '\0'; // TODO: enumにINVALIDみたいなcommand_typeを追加すればいいのでは？
   cmd->line = 0;
 }
 
@@ -90,7 +91,16 @@ int parse_command(const char *line, COMMAND *cmd) {
       rc = EINVAL;
       goto cleanup;
     }
-    // 数字列のパース処理
+    long line_no = 0;
+    rc = parse_token_to_decimal(tok_vec.p[1], &line_no);
+    if (rc != 0) {
+      // FIXME: ここのエラーメッセージどうする？
+      goto cleanup;
+    }
+    cmd_local.valid = true;
+    cmd_local.type = GOTO;
+    cmd_local.line = line_no;
+    *cmd = cmd_local;
   }
 
 cleanup:

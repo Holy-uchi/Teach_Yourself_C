@@ -16,3 +16,4 @@ int sb_append(StrBuf *sb, char *str);
 int sb_push_char(StrBuf *sb, char ch);
 
 int parse_line(const char *line, LineVec *tk);
+int parse_token_to_decimal(const char *s, long *out);

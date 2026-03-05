@@ -161,3 +161,29 @@ cleanup:
   lv_destroy(&tok_local);
   return rc;
 }
+
+int parse_token_to_decimal(const char *s, long *out) {
+  char *end;
+  errno = 0;
+
+  long v = strtol(s, &end, 10);
+
+  if (end == s) {
+    // 1文字も読めてない
+    return -1;
+  }
+  while (isspace((unsigned char)*end)) {
+    end++;
+  }
+  if (*end != '\0') {
+    return -1;
+  }
+  if (errno == ERANGE)
+    return -1;
+
+  if (out) {
+    *out = v;
+  }
+
+  return 0;
+}

@@ -22,7 +22,7 @@ typedef enum {
 typedef struct {
   bool valid;
   COMMAND_TYPE type;
-  int line;
+  long line;
   char *path;
 } COMMAND;
 
