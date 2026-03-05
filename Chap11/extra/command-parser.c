@@ -18,14 +18,14 @@ static void expect(int cond, const char *msg) {
   }
 }
 
-static char *dup_cstr(const char *s) {
-  size_t n = strlen(s) + 1;
-  char *p = (char *)malloc(n);
-  if (!p)
-    return NULL;
-  memcpy(p, s, n);
-  return p;
-}
+//  static char *dup_cstr(const char *s) {
+//    size_t n = strlen(s) + 1;
+//    char *p = (char *)malloc(n);
+//    if (!p)
+//      return NULL;
+//    memcpy(p, s, n);
+//    return p;
+//  }
 
 typedef enum {
   CMD_P,    // print
@@ -53,19 +53,19 @@ static void cmd_destroy(Command *c) {
 }
 
 /* 所与：空白判定 */
-static int is_space(char ch) { return ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r'; }
+// static int is_space(char ch) { return ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r'; }
 
 /* 所与：左右空白をトリムした範囲 [*b,*e) を返す */
-static void trim_span(const char *s, const char **b, const char **e) {
-  const char *x = s;
-  while (*x && is_space(*x))
-    x++;
-  const char *y = s + strlen(s);
-  while (y > x && is_space(y[-1]))
-    y--;
-  *b = x;
-  *e = y;
-}
+//  static void trim_span(const char *s, const char **b, const char **e) {
+//    const char *x = s;
+//    while (*x && is_space(*x))
+//      x++;
+//    const char *y = s + strlen(s);
+//    while (y > x && is_space(y[-1]))
+//      y--;
+//    *b = x;
+//    *e = y;
+//  }
 /************ ここまで所与 ************/
 
 /*

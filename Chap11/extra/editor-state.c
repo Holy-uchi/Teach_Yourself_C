@@ -79,32 +79,32 @@ static int lv_push(LineVec *v, char *owned_line) {
 }
 
 // move insert at i (0..len)
-static int lv_insert(LineVec *v, size_t i, char *owned_line) {
-  if (!v || !owned_line)
-    return EINVAL;
-  if (i > v->len)
-    return ERANGE;
-  int rc = lv_reserve(v, v->len + 1);
-  if (rc)
-    return rc;
-  memmove(&v->p[i + 1], &v->p[i], (v->len - i) * sizeof(v->p[0]));
-  v->p[i] = owned_line;
-  v->len++;
-  return 0;
-}
+// static int lv_insert(LineVec *v, size_t i, char *owned_line) {
+//   if (!v || !owned_line)
+//     return EINVAL;
+//   if (i > v->len)
+//     return ERANGE;
+//   int rc = lv_reserve(v, v->len + 1);
+//   if (rc)
+//     return rc;
+//   memmove(&v->p[i + 1], &v->p[i], (v->len - i) * sizeof(v->p[0]));
+//   v->p[i] = owned_line;
+//   v->len++;
+//   return 0;
+// }
 
-static int lv_delete(LineVec *v, size_t i) {
-  if (!v)
-    return EINVAL;
-  if (i >= v->len)
-    return ERANGE;
-  free(v->p[i]);
-  size_t tail = v->len - i - 1;
-  if (tail)
-    memmove(&v->p[i], &v->p[i + 1], tail * sizeof(v->p[0]));
-  v->len--;
-  return 0;
-}
+// static int lv_delete(LineVec *v, size_t i) {
+//   if (!v)
+//     return EINVAL;
+//   if (i >= v->len)
+//     return ERANGE;
+//   free(v->p[i]);
+//   size_t tail = v->len - i - 1;
+//   if (tail)
+//     memmove(&v->p[i], &v->p[i + 1], tail * sizeof(v->p[0]));
+//   v->len--;
+//   return 0;
+// }
 
 static void assert_lines(const LineVec *v, const char **e, size_t n) {
   expect(v->len == n, "len match");

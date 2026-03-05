@@ -1,3 +1,4 @@
+// CMAKE_SKIP_EXE
 #include "line-editor.h"
 #include <stddef.h>
 
