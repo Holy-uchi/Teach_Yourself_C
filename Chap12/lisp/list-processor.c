@@ -60,6 +60,9 @@ int lisp_eval(Cons *cons, int32_t *out) {
   // 次のcarはNUMBERかCONSであるべき
   car = next_cons.car;
   cdr = next_cons.cdr;
+  if (!car || !cdr) {
+    return -1;
+  }
   if (car->type != VAL_NUMBER && car->type != VAL_CONS) {
     // エラー
     return -1;
@@ -97,7 +100,7 @@ int lisp_eval(Cons *cons, int32_t *out) {
     if (car->type == VAL_CONS) {
       rc = lisp_eval(&car->as.cons, &as_num);
       if (rc != 0) {
-        return -1;
+        return rc;
       }
     } else {
       as_num = car->as.number;
