@@ -119,12 +119,12 @@ int tv_reserve(TokenVec *tv, size_t min_size) {
     ncap *= 2;
   }
 
-  if (ncap > SIZE_MAX / sizeof(LispToken *)) {
+  if (ncap > SIZE_MAX / sizeof(LispToken)) {
     rc = EOVERFLOW;
     goto cleanup;
   }
 
-  tmp = realloc(tv->p, sizeof(LispToken *) * ncap);
+  tmp = realloc(tv->p, sizeof(LispToken) * ncap);
   if (!tmp) {
     rc = ENOMEM;
     goto cleanup;
@@ -156,7 +156,7 @@ int tv_push(TokenVec *tv, LispToken token) {
 }
 
 int segment_string(const char *buf, LineVec *lv_out) {
-  if (!buf || !lv_out || lv_out->p != NULL) {
+  if (!buf || !lv_out || lv_out->p != NULL || lv_out->len != 0 || lv_out->cap != 0) {
     return EINVAL;
   }
   lv_init(lv_out); // 出力を初期化状態にしておく
@@ -270,7 +270,10 @@ int tokenize_segments(const LineVec *segments, TokenVec *tv_out) {
   tv_init(&tv_local);
 
   // 成功するならば、tv_out->len == segments->len
-  tv_reserve(&tv_local, segments->len);
+  rc = tv_reserve(&tv_local, segments->len);
+  if (rc != 0) {
+    goto cleanup;
+  }
 
   for (size_t i = 0; i < segments->len; i++) {
     LispToken token = {0};

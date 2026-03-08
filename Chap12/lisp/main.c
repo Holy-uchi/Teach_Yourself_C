@@ -1,3 +1,4 @@
+// CMAKE_SKIP_EXE
 #include "lisp-parser.h"
 #include "lisp-tokenizer.h"
 #include "list-processor.h"
@@ -5,7 +6,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <sys/errno.h>
 
 int main(void) {
   int rc = 0;
@@ -31,8 +31,13 @@ int main(void) {
     // tokensをパースしていく
     size_t pos = 0;
     int rc_parser = parse_list(&tokens, &pos, &value);
-    if (rc_parser != 0) {
-      printf("parse failed: %s\n", strerror(rc_parser));
+    if (rc_parser != 0 || pos != tokens.len) {
+      if (rc_parser != 0) {
+        printf("parse failed: %s\n", strerror(rc_parser));
+      } else {
+        printf("parse failed: extra tokens\n");
+      }
+      value_delete(&value, true);
       tv_destroy(&tokens);
       lv_destroy(&segments);
       continue;

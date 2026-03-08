@@ -24,11 +24,13 @@ int parse_value(const TokenVec *tv, size_t *pos, Value **out) {
     if (rc != 0) {
       goto cleanup;
     }
+    pos_local++;
   } else if (tv->p[pos_local].type == TOK_OPERATOR) {
     rc = value_new_with_op(tv->p[pos_local].as.op, &val_tmp);
     if (rc != 0) {
       goto cleanup;
     }
+    pos_local++;
   } else if (tv->p[pos_local].type == TOK_LPAREN) {
     rc = parse_list(tv, &pos_local, &val_tmp);
     if (rc != 0) {
@@ -36,7 +38,6 @@ int parse_value(const TokenVec *tv, size_t *pos, Value **out) {
     }
   } else {
     rc = EINVAL;
-    puts("1");
     goto cleanup;
   }
 
@@ -45,7 +46,7 @@ int parse_value(const TokenVec *tv, size_t *pos, Value **out) {
 
 cleanup:
   *pos = pos_local;
-  value_delete(&val_tmp, false);
+  value_delete(&val_tmp, true);
   return rc;
 }
 
@@ -59,11 +60,11 @@ int parse_list(const TokenVec *tv, size_t *pos, Value **out) {
   }
 
   int rc = 0;
-  size_t pos_local = *pos; // 直接インクリメントしながら進んだほうがいいのか？
+  size_t pos_local = *pos;
   Value *car_val = NULL;
-  Value *root_cons_val = NULL;
-  Value *last_cons_val = NULL;
-  Value *current_cons_val = NULL;
+  Value *root = NULL;
+  Value *tail = NULL;
+  Value *new_node = NULL;
 
   // 一つ目がTOK_LPARENでないなら不正
   if (tv->p[pos_local].type != TOK_LPAREN) {
@@ -80,56 +81,59 @@ int parse_list(const TokenVec *tv, size_t *pos, Value **out) {
       goto cleanup;
     }
     Cons next_cons = {.car = car_val, .cdr = NULL};
-    car_val = NULL;
-    rc = value_new_with_cons(next_cons, &current_cons_val);
+    rc = value_new_with_cons(next_cons, &new_node);
     if (rc != 0) {
       // val_tmpはNULL
       // next_consは.carがヒープ
       goto cleanup;
     }
-    if (!root_cons_val) {
+    car_val = NULL;
+    if (root == NULL) {
       // 最初のconsへの参照を残す
-      root_cons_val = current_cons_val;
+      root = new_node;
+    } else {
+      tail->as.cons.cdr = new_node;
     }
-    if (last_cons_val != NULL) {
-      last_cons_val->as.cons.cdr = current_cons_val;
-    }
-    last_cons_val = current_cons_val;
-    current_cons_val = NULL;
-
-    pos_local++;
+    tail = new_node;
+    new_node = NULL;
   }
 
-  // もしtoken_vectorを最後まで走査したのにTOK_RPARENじゃないならカッコの数が不一致
-  if (pos_local == tv->len && tv->p[pos_local].type != TOK_RPAREN) {
+  if (pos_local == tv->len) {
+    // 入力末尾まで来たのに対応するTOK_RPARENが見つからない
+    rc = EINVAL;
+    goto cleanup;
+  }
+  if (tv->p[pos_local].type != TOK_RPAREN) {
+    // 少し冗長だが、末尾の')'チェック
     rc = EINVAL;
     goto cleanup;
   }
 
   // もしroot_cons_valがないなら、listが空だったと言うこと
-  if (!root_cons_val) {
+  if (root == NULL) {
+    // 空リストは不正とする
     rc = EINVAL;
     goto cleanup;
   }
 
   // pos_local < tv->len && TOK_RPAREN
-  rc = value_new_with_nil(&current_cons_val);
+  // TOK_RPARENの分１つ消費
+  pos_local++;
+  rc = value_new_with_nil(&new_node);
   if (rc != 0) {
     goto cleanup;
   }
-  last_cons_val->as.cons.cdr = current_cons_val;
+  tail->as.cons.cdr = new_node;
 
-  *out = root_cons_val;
+  *out = root;
   car_val = NULL;
-  root_cons_val = NULL;
-  current_cons_val = NULL;
-  last_cons_val = NULL;
+  root = NULL;
+  new_node = NULL;
 
 cleanup:
   *pos = pos_local;
-  value_delete(&car_val, false);
-  value_delete(&root_cons_val, false);
-  value_delete(&last_cons_val, false);
-  value_delete(&current_cons_val, false);
+  value_delete(&car_val, true);
+  value_delete(&new_node, true);
+  value_delete(&root, true);
   return rc;
 }

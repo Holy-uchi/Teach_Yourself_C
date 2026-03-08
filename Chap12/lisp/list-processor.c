@@ -53,7 +53,7 @@ int lisp_eval(Cons *cons, int32_t *out) {
 
   if (cdr->type != VAL_CONS) {
     // エラー
-    // オペレータの直後は少なくとも一つのオペランドが来るべき
+    // オペレータの直後は少なくとも2つのオペランドが来るべき
     return -1;
   }
 
