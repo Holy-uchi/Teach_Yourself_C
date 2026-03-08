@@ -1,7 +1,9 @@
 #include "list-processor.h"
+#include <errno.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef int32_t (*OP_FUNC)(int32_t, int32_t);
 static int32_t op_add(int32_t a, int32_t b) { return a + b; }
@@ -117,4 +119,128 @@ int lisp_eval(Cons *cons, int32_t *out) {
   }
   *out = current;
   return 0;
+}
+
+// XXX: これ多分使わない。
+// int cons_new(Cons **out) {
+//   if (!out || *out != NULL) {
+//     // *outはNULLを要求
+//     return EINVAL;
+//   }
+//   // car == NULL や cdr == NULL は許容
+//   Cons *tmp = malloc(sizeof(Cons));
+//   if (!tmp) {
+//     return ENOMEM;
+//   }
+//
+//   tmp->car = tmp->cdr = NULL;
+//   *out = tmp;
+//   return 0;
+// }
+
+void cons_init(Cons *cons) {
+  cons->car = NULL;
+  cons->cdr = NULL;
+}
+
+void cons_destroy(Cons cons, bool recursive) {
+  value_delete(&cons.car, recursive);
+  value_delete(&cons.cdr, recursive);
+}
+
+int value_new_with_num(int32_t num, Value **out) {
+  if (!out || *out != NULL) {
+    // *outはNULLを要求
+    return EINVAL;
+  }
+
+  Value *tmp = malloc(sizeof(Value));
+  if (!tmp) {
+    return ENOMEM;
+  }
+
+  tmp->type = VAL_NUMBER;
+  tmp->as.number = num;
+
+  *out = tmp;
+  return 0;
+}
+
+int value_new_with_op(OperatorType op, Value **out) {
+  if (!out || *out != NULL) {
+    // *outはNULLを要求
+    return EINVAL;
+  }
+
+  Value *tmp = malloc(sizeof(Value));
+  if (!tmp) {
+    return ENOMEM;
+  }
+  tmp->type = VAL_OPERATOR;
+  tmp->as.op = op;
+
+  *out = tmp;
+  return 0;
+}
+
+int value_new_with_nil(Value **out) {
+  if (!out || *out != NULL) {
+    // *outはNULLを要求
+    return EINVAL;
+  }
+
+  Value *tmp = malloc(sizeof(Value));
+  if (!tmp) {
+    return ENOMEM;
+  }
+  tmp->type = VAL_NIL;
+
+  *out = tmp;
+  return 0;
+}
+
+int value_new_with_cons(const Cons cons, Value **out) {
+  if (!out || *out != NULL) {
+    // *outはNULLを要求
+    return EINVAL;
+  }
+
+  Value *tmp = malloc(sizeof(Value));
+  if (!tmp) {
+    return ENOMEM;
+  }
+  tmp->type = VAL_CONS;
+  tmp->as.cons = cons;
+
+  *out = tmp;
+  return 0;
+}
+
+void value_delete(Value **value, bool recursive) {
+  if (!value) {
+    return;
+  }
+  if (*value == NULL) {
+    return;
+  }
+  if (!recursive) {
+    free(*value);
+    *value = NULL;
+    return;
+  }
+
+  // recursive == true
+  switch ((*value)->type) {
+  case VAL_NUMBER:
+  case VAL_OPERATOR:
+  case VAL_NIL:
+    free(*value);
+    *value = NULL;
+    return;
+  case VAL_CONS:
+    cons_destroy((*value)->as.cons, recursive);
+    free(*value);
+    *value = NULL;
+    return;
+  }
 }

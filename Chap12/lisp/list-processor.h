@@ -1,4 +1,5 @@
 #pragma once
+#include <stdbool.h>
 #include <stdint.h>
 
 typedef enum {
@@ -33,3 +34,12 @@ struct Value {
 };
 
 int lisp_eval(Cons *cons, int32_t *out);
+
+void cons_init(Cons *cons);
+void cons_destroy(Cons cons, bool recursive);
+
+int value_new_with_num(int32_t num, Value **out);
+int value_new_with_op(OperatorType op, Value **out);
+int value_new_with_nil(Value **out);
+int value_new_with_cons(const Cons cons, Value **out);
+void value_delete(Value **value, bool recursive);
