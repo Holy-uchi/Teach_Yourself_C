@@ -1,4 +1,6 @@
 // 第１問
+#include <stdbool.h>
+#include <stdio.h>
 
 typedef struct {
   unsigned int seven : 3;
@@ -18,8 +20,6 @@ struct person {
 };
 
 // 第３問
-#include <stdbool.h>
-#include <stdio.h>
 
 void print_person(struct person *p, bool use_id) {
   if (use_id) {
