@@ -50,24 +50,24 @@ cmake --build build -j
 
 ## Progress
 
-`Completion: 5 / 14 chapters`
+`Completion: 14 / 14 chapters` — **一周完了** (2025-03)
 
 | Chapter | Status |
 | --- | --- |
-| 1. Setup for Learning | `PENDING` |
+| 1. Setup for Learning | `DONE` |
 | 2. Basics of C | `DONE` |
 | 3. Numbers and Variables | `DONE` |
 | 4. Control Flow: Booleans and Branching | `DONE` |
 | 5. Control Flow: Arrays and Loops | `DONE` |
 | 6. Control Flow: Conditional Loops | `DONE` |
-| 7. Characters and Strings | `PENDING` |
-| 8. Addresses and Pointers | `PENDING` |
-| 9. Writing Functions | `PENDING` |
-| 10. Input and Output | `PENDING` |
-| 11. Structures | `PENDING` |
-| 12. Unions and Bit Fields | `PENDING` |
-| 13. Advanced Types and Operators | `PENDING` |
-| 14. Preprocessor | `PENDING` |
+| 7. Characters and Strings | `DONE` |
+| 8. Addresses and Pointers | `DONE` |
+| 9. Writing Functions | `DONE` |
+| 10. Input and Output | `DONE` |
+| 11. Structures | `DONE` |
+| 12. Unions and Bit Fields | `DONE` |
+| 13. Advanced Types and Operators | `DONE` |
+| 14. Preprocessor | `DONE` |
 
 ## License
 
